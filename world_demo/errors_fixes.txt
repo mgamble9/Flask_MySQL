@@ -1,0 +1,40 @@
+1. changing the localhost var name in mysqlconnection.py does not change
+the functionality at all:
+
+'host': 'localhost:9999',
+
+2.
+
+'database': eb, # we got db as an argument
+
+'database': eb, # we got db as an argument
+NameError: global name 'eb' is not defined
+
+crashes server so fix typo
+
+3.
+
+'user': 'admin',
+
+sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError)
+ (1045, "Access denied for user 'admin'@'localhost' (using password: YES)")
+
+'admin' should be 'root'
+
+4.
+
+'password': 'pwd',
+
+sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError)
+ (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+
+same error but now is because password doesn't match for root
+
+5.
+
+'port': '8888' # change the port to match the port your SQL server
+# is running on
+
+nothing happens at prompt... change back to 8889
+the terminal window freezes
+kill window and open new window then activate flaskSQL env
