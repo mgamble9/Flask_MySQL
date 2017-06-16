@@ -1,0 +1,56 @@
+<html>
+<head>
+  <title>Success</title>
+  <style type="text/css">
+    #wrapper {
+      width:: 600px;
+      margin: 10px;
+      background-color: lightblue;
+      text-align: center;
+    }
+    #notice {
+      height: 100px;
+    }
+    #success_style {
+      background-color: green;
+      color: black;
+      text-align: center;
+      display: inline-block;
+      padding: 20px;
+      /*overflow: scroll;*/
+    }
+
+    #display_div {
+      width:400px;
+      height: 200px;
+      border: solid 1px black;
+      text-align: center;
+      display: inline-block;
+      /*overflow: scroll;*/
+    }
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="notice">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div id="success_style">
+          {% for message in messages %}
+            <p>{{message}}</p>
+          {% endfor %}
+            </div>
+        {% endif %}
+      {% endwith %}
+    </div>
+    <div id="display_div">
+      {% for names in fullname: %}
+         <h3>Hello!</h3>
+         <p> {{ names['first_name'] }} </p>
+         <p> {{ names['last_name'] }} </p>
+      {% endfor %}
+    </div>
+  </div>
+
+</body>
+</html>

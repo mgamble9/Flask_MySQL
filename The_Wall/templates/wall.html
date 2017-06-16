@@ -1,0 +1,77 @@
+<html>
+<head>
+  <title>DOJO WALL</title>
+  <style type="text/css">
+    #wrapper {
+      width:: 600px;
+      margin: 10px;
+      background-color: lightblue;
+      text-align: center;
+    }
+    #notice {
+      height: 100px;
+    }
+    #success_style {
+      background-color: green;
+      color: black;
+      text-align: center;
+      display: inline-block;
+      padding: 20px;
+      /*overflow: scroll;*/
+    }
+
+    #message_div {
+      width: auto;
+      height: 500px;
+      border: solid 1px black;
+      text-align: left;
+      /*display: inline-block;*/
+      overflow: scroll;
+    }
+
+    .comment {
+      padding-left: 20px;
+    }
+    .wallpost {
+      width: 600px;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="header">
+      <p>CodingDojo Wall!<span> Welcome {{ fullname[0]['first_name'] }}!</span></p>
+    </div>
+    <hr>
+    <div id="form_div">
+      <form action='/wall_post' method='POST'>
+        <label for="wall_post">Post a message:<input type="text" maxlength=500 name="wall_post" class="wallpost"></label><br>
+        <input type="submit" value="Post Message">
+      </form>
+    </div>
+    <div id="message_div">
+      {% for msg in all_messages: %}
+          <p> {{ msg['first_name'] }}
+          <span> {{ msg['last_name'] }} </span>
+          <span> {{ msg['created_at'] }} </span></p>
+          <p> {{ msg['message']}} </p>
+          {% if not all_comments|length <1 %}
+            {% for cmt in all_comments: %}
+              {% if cmt['messages_id'] == msg['id'] %}
+                <p class="comment"> {{ cmt['first_name'] }} <span> {{ cmt['last_name'] }} </span><span> {{ cmt['created_at'] }} </span></p>
+                <p class="comment">  {{ cmt['comment'] }} </p>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          <form action='/wall_comment' method='POST'>
+            <input type="hidden" name="msg_id" value= {{ msg['id'] }} >
+            <label for="wall_comment">Comment on message:<input type="text" maxlength=500 name="wall_comment" class="wallpost"></label><br>
+            <input type="submit" value="Post Comment">
+          </form>
+      {% endfor %}
+    </div>
+  </div>
+
+</body>
+</html>
